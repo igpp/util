@@ -59,6 +59,9 @@
 				<path>Reflection.java</path>
 			</fileitem>
 			<fileitem>
+				<path>StringListComparator.java</path>
+			</fileitem>
+			<fileitem>
 				<path>TermDef.java</path>
 			</fileitem>
 			<fileitem>

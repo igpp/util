@@ -4,7 +4,7 @@
    See "build.xml" for how each property influences the build.
 -->
 <project name="project-config" basedir="." default="...">
-    <property name="version"        value="1.0.1"/>
+    <property name="version"        value="1.0.2"/>
     <property name="package.title"  value="IGPP Util"/>
     <property name="package.name"   value="igpp-util"/>
     <property name="package.vendor" value="UCLA/IGPP"/>
@@ -13,5 +13,7 @@
     <property name="release.host"  value="release.igpp.ucla.edu"/>
     <property name="release.path"  value="/var/www/release/root/libraries/igpp/util"/>
     <property name="release.local"   value="/java/jre/lib/ext" />
+    <property name="release.jar"   value="/projects/jar/igpp" />
+    <property name="release.dist"   value="/projects/dist/igpp" />
     <property name="main-class"   value="igpp.util.HelloWorld"/>
 </project>

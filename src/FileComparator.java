@@ -13,11 +13,11 @@ import java.util.Comparator;
  */
 public class FileComparator implements Comparator 
 {
-	static final int FileName = 0;
-	static final int FileLastModified = 1;
+	public static final int FileName = 0;
+	public static final int FileLastModified = 1;
 	
-	static final int SortAscending = 0;
-	static final int SortDecending = 1;
+	public static final int SortAscending = 0;
+	public static final int SortDecending = 1;
 	
 	static String mVersion = "1.0.0";
 	
