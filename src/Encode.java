@@ -30,7 +30,8 @@ public class Encode {
 		
 		buffer = term.replace('*', '%');
 		buffer = buffer.replace('?', '_');
-		buffer = buffer.replace("'", "\\'");
+		buffer = buffer.replace("'", "''");
+		// buffer = buffer.replace("'", "\\'");
 		buffer = buffer.replace("\"", "\\\"");
 
 		return buffer;

@@ -19,7 +19,7 @@ import java.lang.Character;
  */
 public class Date {
 	
-	static String	mVersion = "1.0.0";
+	static String	mVersion = "1.0.1";
 	static private String mDateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 	
  	// Enumeration of possible value type
@@ -51,17 +51,22 @@ public class Date {
 	static public void main(String[] args) 
 	{
 		Date me = new Date();
+		Boolean ceil = false;
 		
 		System.out.println("Version: " + me.mVersion);
-		System.out.println("Usage: " + me.getClass().getName() + " [ISO-8601 String] | [ ISO-8601 Duration]");
+		System.out.println("Usage: " + me.getClass().getName() + " [+|-] ([ISO-8601 String] | [ ISO-8601 Duration])");
 		
 		try {
 			System.out.println("Now: " + me.now());
 			for(String arg : args) {
-				if(arg.startsWith("P")) {	// Duration
+				if(arg.equals("+")) {	// Round up
+				  ceil = true;
+				} else if(arg.equals("-")) {	// Round down
+				  ceil = false;
+				} else if(arg.startsWith("P")) {	// Duration
 					System.out.println("Duration: " + me.getDateString(me.parseISO8601Duration(arg)) + "; From: " + arg + "(" + translateISO8601Duration(arg) + ")");
 				} else {	// Full time string
-					System.out.println("Date: " + me.getDateString(me.parseISO8601(arg)) + "; From: " + arg);
+					System.out.println("Date: " + me.getDateString(me.parseISO8601(arg, ceil)) + "; From: " + arg);
 				}
 			}
 		} catch(Exception e) {
@@ -728,6 +733,24 @@ public class Date {
 	 **/
 	static public Calendar parseISO8601(String date)
 	{
+		return parseISO8601(date, false);
+	}
+	
+	/**
+	 * Parses an ISO-8601 formatted time string.
+	 * ISO-8601 time strings have the format YYYY-MM-DDTHH:MM:SS.sss
+	 * The date/time seperator "T" may also be a space.
+	 * The date may be abbreviated. Any unpsecfied values
+	 * are set to the minimum allowed.
+	 * 
+	 * @param date   the ISO-8601 time stirng
+	 * @param ceil   indicate if maximum value is assumed for non-specified parts.
+	 *               If <code>false</code> minimum (floor) value is assumed.
+	 *
+	 * @return a {@link Calendar} with set the appropriate date and time.
+	 **/
+	static public Calendar parseISO8601(String date, Boolean ceil)
+	{
 		Calendar cal = new GregorianCalendar();
 		String	buffer;
 		String	part[];
@@ -744,19 +767,19 @@ public class Date {
 			// Year
 			part = buffer.split("-", 2);
 			cal.set(Calendar.YEAR, Integer.parseInt(part[0]));
-			if(part.length == 1) return cal;
+			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.MONTH); return cal; }
 			buffer = part[1];
 			
 			// Month
 			part = buffer.split("-", 2);
 			cal.set(Calendar.MONTH, Integer.parseInt(part[0])-1);	// January = 0
-			if(part.length == 1) return cal;
+			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.DAY_OF_MONTH); return cal; }
 			buffer = part[1];
 			
 			// Day
 			part = buffer.split("[T ]", 2);	// Allow "T" or " "
 			cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(part[0]));
-			if(part.length == 1) return cal;
+			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.HOUR_OF_DAY); return cal; }
 			buffer = part[1];
 			
 			// Find offsets if any. Form is hh:mm:ss[+-]hh[mm]
@@ -784,19 +807,19 @@ public class Date {
 			// Hour
 			part = buffer.split(":", 2);
 			cal.set(Calendar.HOUR, Integer.parseInt(part[0]));
-			if(part.length == 1) return cal;
+			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.MINUTE); return cal; }
 			buffer = part[1];
 			
 			// Minute
 			part = buffer.split(":", 2);
 			cal.set(Calendar.MINUTE, Integer.parseInt(part[0]));
-			if(part.length == 1) return cal;
+			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.SECOND); return cal; }
 			buffer = part[1];
 			
 			// Seconds
 			part = buffer.split("\\.", 2);
 			cal.set(Calendar.SECOND, Integer.parseInt(part[0]));
-			if(part.length == 1) return cal;
+			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.MILLISECOND); return cal;}
 			buffer = part[1];
 			
 			// Milliseconds
@@ -811,6 +834,99 @@ public class Date {
 		}
 		
 		return cal;
+	}
+	
+	/**
+	 * Set the maximum (ceil) or minimum (floor) value for a time field.
+	 * The starting field is specified. All fields of lower order are also set.
+	 * 
+	 * @param ceil   indicate if maximum value is assumed for non-specified parts.
+	 *               If <code>false</code> minimum (floor) value is assumed.
+	 *        cal    the Calendar with higher order fields already set.
+	 *        field  the field to begin setting values.
+	 *
+	 * @return the Calendar arugment is altered.
+	 **/
+	static public Calendar setLimit(Boolean ceil, Calendar cal, int field) 
+	{
+		Calendar calendar = (Calendar) cal.clone();
+		
+		if(field == Calendar.YEAR) {
+			if(ceil) calendar.set(Calendar.YEAR, 9000); // Using getMaximum does not work properly
+			else calendar.set(Calendar.YEAR, calendar.getMinimum(Calendar.YEAR));
+			field = Calendar.MONTH;
+		}
+		
+		if(field == Calendar.MONTH) {
+			if(ceil) calendar.set(Calendar.MONTH, calendar.getMaximum(Calendar.MONTH));
+			else calendar.set(Calendar.MONTH, calendar.getMinimum(Calendar.MONTH));
+			field = Calendar.DAY_OF_MONTH;
+		}
+		
+		if(field == Calendar.DAY_OF_MONTH) {
+			calendar.set(Calendar.DAY_OF_MONTH, 1);
+			System.out.println("YEAR: " + calendar.get(Calendar.YEAR));
+			System.out.println("MONTH: " + calendar.get(Calendar.MONTH));
+			System.out.println("DAY_OF_MONTH: " + calendar.get(Calendar.DAY_OF_MONTH));
+			System.out.println("Max Day of month: " + calendar.getMaximum(Calendar.DATE));
+			System.out.println("Days in month: " + getDaysInMonth(calendar));
+			
+			if(ceil) calendar.set(Calendar.DAY_OF_MONTH, getDaysInMonth(calendar));
+			else calendar.set(Calendar.DAY_OF_MONTH, calendar.getMinimum(Calendar.DAY_OF_MONTH));
+			field = Calendar.HOUR_OF_DAY;
+		}
+		
+		if(field == Calendar.HOUR_OF_DAY) {
+			if(ceil) calendar.set(Calendar.HOUR_OF_DAY, calendar.getMaximum(Calendar.HOUR_OF_DAY));
+			else calendar.set(Calendar.HOUR_OF_DAY, calendar.getMinimum(Calendar.HOUR_OF_DAY));
+			field = Calendar.MINUTE;
+		}
+		
+		if(field == Calendar.MINUTE) {
+			if(ceil) calendar.set(Calendar.MINUTE, calendar.getMaximum(Calendar.MINUTE));
+			else calendar.set(Calendar.MINUTE, calendar.getMinimum(Calendar.MINUTE));
+			field = Calendar.SECOND;
+		}
+		
+		if(field == Calendar.SECOND) {
+			if(ceil) calendar.set(Calendar.SECOND, calendar.getMaximum(Calendar.SECOND));
+			else calendar.set(Calendar.SECOND, calendar.getMinimum(Calendar.SECOND));
+			field = Calendar.MILLISECOND;
+		}
+		
+		if(field == Calendar.MILLISECOND) {
+			if(ceil) calendar.set(Calendar.MILLISECOND, calendar.getMaximum(Calendar.MILLISECOND));
+			else calendar.set(Calendar.MILLISECOND, calendar.getMinimum(Calendar.MILLISECOND));
+		}
+		
+		return calendar;
+	}
+	
+	/**
+	 * Determines the number of days in the month.
+	 * The Calendar.GetMaximum(Calendar.DAY_OF_MONTH) always returns 31 which is
+	 * not specific to the month defined in the instance of the Calendary.
+	 * This method determines the month, sets the day to 28 and then advances
+	 * the day until the month changes.
+	 *
+	 * @param cal   the Calendar with at least the year and month set.
+	 *
+	 * @returnthe the count of the number of days in the month.
+	 **/
+	static public int getDaysInMonth(Calendar cal) 
+	{
+		Calendar calendar = (Calendar) cal.clone();
+		
+		int month = calendar.get(Calendar.MONTH);
+		int days = 28;
+		calendar.set(Calendar.DAY_OF_MONTH, days);
+		
+		while(month == calendar.get(Calendar.MONTH)) {
+			days++;
+			calendar.set(Calendar.DAY_OF_MONTH, days);
+		}
+		
+		return days-1;	// Always one more
 	}
 	
 	/**
