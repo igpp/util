@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>igpp</label>
+	</settings>
+	<users>
+		<user>
+			<path>igpp-util.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>..\src\util.jcp</path>
+		</project>
+	</projects>
+</workspace>
