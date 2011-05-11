@@ -18,46 +18,10 @@
 			<active>false</active>
 		</docitem>
 		<docitem>
-			<path>..\src\Date.java</path>
-			<source>true</source>
-			<index>1</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>..\..\..\..\..\java\docs\api\java\util\GregorianCalendar.html</path>
-			<source>false</source>
-			<index>2</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
 			<path>..\src\Encode.java</path>
 			<source>true</source>
-			<index>3</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>..\src\File.java</path>
-			<source>true</source>
-			<index>4</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>..\src\Listing.java</path>
-			<source>true</source>
-			<index>5</index>
-			<active>false</active>
-		</docitem>
-		<docitem>
-			<path>..\src\FileComparator.java</path>
-			<source>true</source>
-			<index>6</index>
+			<index>1</index>
 			<active>true</active>
-		</docitem>
-		<docitem>
-			<path>..\src\StringListComparator.java</path>
-			<source>true</source>
-			<index>7</index>
-			<active>false</active>
 		</docitem>
 	</open_files>
 </workspace_user>

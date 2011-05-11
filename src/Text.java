@@ -717,7 +717,7 @@ public class Text {
 	}
 
 	/**
- 	 * Get the path name portion of a URI.
+ 	 * Get the path name portion of a URI. Leaving the tailing delimiter in place.
  	 *
  	 * @param pathName   the path to a file. Full or partial path is permited.
  	 *
@@ -730,6 +730,25 @@ public class Text {
 		int n = pathName.lastIndexOf('/');
 		if(n == -1) n = pathName.lastIndexOf('\\');	// Try in Microsoft mode (backslash).
 		if(n != -1) pathName = pathName.substring(0, n + 1);	// Include trailing slash
+		
+		return pathName;
+	}
+
+
+	/**
+ 	 * Get the path name portion of a URL.
+ 	 *
+ 	 * @param pathName   the path to a file. Full or partial path is permited.
+ 	 *
+ 	 * @return   the path portion of the pathname.
+	 **/
+	static public String getURLPath(String pathName)
+	{
+		if(pathName == null) return "";
+		
+		int n = pathName.lastIndexOf('/');
+		if(n == -1) n = pathName.lastIndexOf('\\');	// Try in Microsoft mode (backslash).
+		if(n != -1) pathName = pathName.substring(0, n);
 		
 		return pathName;
 	}
