@@ -47,6 +47,9 @@
 				<path>Listing.java</path>
 			</fileitem>
 			<fileitem>
+				<path>Option.java</path>
+			</fileitem>
+			<fileitem>
 				<path>Options.java</path>
 			</fileitem>
 			<fileitem>
@@ -57,9 +60,6 @@
 			</fileitem>
 			<fileitem>
 				<path>Reflection.java</path>
-			</fileitem>
-			<fileitem>
-				<path>StringListComparator.java</path>
 			</fileitem>
 			<fileitem>
 				<path>TermDef.java</path>

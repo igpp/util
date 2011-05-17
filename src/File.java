@@ -150,6 +150,73 @@ public class File {
 		
 		return item.isFile();
 	}
+
+	/**
+	 * Extract the name of the file from a pathname.
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		the file name portion of pathname.
+	 *
+	 */
+	static public String getName(String pathname) 
+	{
+		java.io.File file = new java.io.File (pathname);		
+			
+		return file.getName();
+	}
+	
+	/**
+	 * Extract the parent of the file from a pathname.
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		the parent portion of pathname.
+	 *
+	 */
+	static public String getParent(String pathname) 
+	{
+		java.io.File file = new java.io.File (pathname);		
+			
+		return file.getParent();
+	}
 		
+	/**
+	 * Extract the base name of the file from a pathname.
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		the base name of the file portion of pathname.
+	 *
+	 */
+	static public String getBaseName(String pathname) 
+	{
+		java.io.File file = new java.io.File (pathname);		
+		String base = file.getName();
+		int n = base.lastIndexOf(".");
+		if(n != -1) base = base.substring(0, n);
+		
+		return base;
+	}
+	
+	/**
+	 * Extract the extension of the file from a pathname.
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		the extension portion of pathname.
+	 *
+	 */
+	static public String getExtension(String pathname) 
+	{
+		java.io.File file = new java.io.File (pathname);		
+		String ext = file.getName();
+		int n = ext.lastIndexOf(".");
+		if(n != -1) ext = ext.substring(n);
+		else ext = "";
+		
+		return ext;
+	}
+	
 }
 
