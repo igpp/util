@@ -39,6 +39,12 @@
 			<path>..\src\Argument.java</path>
 			<source>true</source>
 			<index>4</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>..\src\File.java</path>
+			<source>true</source>
+			<index>5</index>
 			<active>true</active>
 		</docitem>
 	</open_files>

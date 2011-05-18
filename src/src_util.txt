@@ -10,6 +10,7 @@ C:\Projects\igpp\java\util\src\Options.java
 C:\Projects\igpp\java\util\src\package-info.java
 C:\Projects\igpp\java\util\src\Process.java
 C:\Projects\igpp\java\util\src\Reflection.java
+C:\Projects\igpp\java\util\src\StringListComparator.java
 C:\Projects\igpp\java\util\src\TermDef.java
 C:\Projects\igpp\java\util\src\TermList.java
 C:\Projects\igpp\java\util\src\Text.java
