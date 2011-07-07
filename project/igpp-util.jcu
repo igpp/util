@@ -45,7 +45,25 @@
 			<path>..\src\File.java</path>
 			<source>true</source>
 			<index>5</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>..\src\FileComparator.java</path>
+			<source>true</source>
+			<index>6</index>
+			<active>false</active>
+		</docitem>
+		<docitem>
+			<path>..\src\StringListComparator.java</path>
+			<source>true</source>
+			<index>7</index>
 			<active>true</active>
+		</docitem>
+		<docitem>
+			<path>..\..\..\..\..\java\docs\api\java\util\ArrayList.html</path>
+			<source>false</source>
+			<index>8</index>
+			<active>false</active>
 		</docitem>
 	</open_files>
 </workspace_user>
