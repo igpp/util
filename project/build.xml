@@ -107,7 +107,7 @@
     </target>
 
     <!-- Create jar file for classes -->
-    <target name="jar" depends="compile">
+    <target name="jar">
         <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${package.name}-${version}.jar">
         	   <fileset dir="${build.dir}/classes" />
