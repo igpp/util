@@ -4,7 +4,7 @@
    See "build.xml" for how each property influences the build.
 -->
 <project name="project-config" basedir="." default="...">
-    <property name="version"        value="1.0.5"/>
+    <property name="version"        value="1.0.8"/>
     <property name="package.title"  value="IGPP Util"/>
     <property name="package.name"   value="igpp-util"/>
     <property name="package.vendor" value="UCLA/IGPP"/>

@@ -103,7 +103,7 @@
     <!-- Compile source code -->
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" extdirs="${release.jar}" />
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" extdirs="${release.jar};./lib" />
     </target>
 
     <!-- Create jar file for classes -->
@@ -210,8 +210,39 @@
            <bottom><![CDATA[<i>${copyright}</i>]]></bottom>
            <link href="http://java.sun.com/j2se/1.5.0/docs/api"/>
          </javadoc>
-      </target>
-
+        
+        <!-- Build jar file containing javadoc --> 
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${package.name}-${version}-javadoc.jar">
+            <fileset dir="${build.dir}/api" />
+            <manifest> 
+                <!-- Who is building this jar? -->
+                <attribute name="Built-By" value="${user.name}"/>
+                <!-- Information about the program itself -->
+                <attribute name="Implementation-Vendor" value="${package.vendor}"/>
+                <attribute name="Implementation-Title" value="${pacakage.title}"/>
+                <attribute name="Implementation-Version" value="${version}"/>
+            </manifest>
+        </jar>
+    </target>
+    
+    <!-- Create print documentation -->
+    <!-- Check if "bin" directory exists and set property for the "bin" target -->
+    <target name="doc.check">
+        <available file="${doc.dir}" type="dir" property="doc.run" />
+    </target>
+    
+    <target name="doc" depends="doc.check" if="doc.run">
+        <mkdir dir="${build.dir}/doc"/>
+        <exec executable="\projects\tools\mmd2pdf.bat" dir="${doc.dir}">
+            <!-- <arg value="-t"/>	--> <!-- Create TOC -->
+            <arg value="-"/>	<!-- Cover page -->
+            <arg value="${package.name}.md" /> <!-- Source Markdown file -->
+            <arg value="../${build.dir}/doc/${package.name}.pdf"/> <!-- Output -->
+        </exec>
+    </target>
+    
+    
     <!-- Perform JUnit testing -->
     <target name="junit" depends="jar">
         <mkdir dir="${report.dir}"/>
