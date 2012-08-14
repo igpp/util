@@ -235,7 +235,7 @@ public class Date {
 	/**
 	 * Create a Calaendar based on a the number of  milliseconds since the epoch (00:00:00 GMT, January 1, 1970).
 	 *
-	 * @param date    count of the number of milliseconds since the epoch (00:00:00 GMT, January 1, 1970).
+	 * @param tick    count of the number of milliseconds since the epoch (00:00:00 GMT, January 1, 1970).
 	 *
 	 * @return  A {@link Calendar} populated with the date and time.
 	 **/
@@ -770,17 +770,25 @@ public class Date {
 			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.MONTH); return cal; }
 			buffer = part[1];
 			
-			// Month
+			// Month or DOY
 			part = buffer.split("-", 2);
-			cal.set(Calendar.MONTH, Integer.parseInt(part[0])-1);	// January = 0
-			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.DAY_OF_MONTH); return cal; }
-			buffer = part[1];
-			
-			// Day
-			part = buffer.split("[T ]", 2);	// Allow "T" or " "
-			cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(part[0]));
-			if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.HOUR_OF_DAY); return cal; }
-			buffer = part[1];
+			if(part.length == 1) { // DOY
+				// Day
+				part = buffer.split("[T ]", 2);	// Allow "T" or " "
+				cal.set(Calendar.DAY_OF_YEAR, Integer.parseInt(part[0]));
+				if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.HOUR_OF_DAY); return cal; }
+				buffer = part[1];				
+			} else { //Month
+				cal.set(Calendar.MONTH, Integer.parseInt(part[0])-1);	// January = 0
+				if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.DAY_OF_MONTH); return cal; }
+				buffer = part[1];
+				
+				// Day
+				part = buffer.split("[T ]", 2);	// Allow "T" or " "
+				cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(part[0]));
+				if(part.length == 1) { cal = setLimit(ceil, cal, Calendar.HOUR_OF_DAY); return cal; }
+				buffer = part[1];
+			}
 			
 			// Find offsets if any. Form is hh:mm:ss[+-]hh[mm]
 			int offset = 0;
@@ -911,7 +919,7 @@ public class Date {
 	 *
 	 * @param cal   the Calendar with at least the year and month set.
 	 *
-	 * @returnthe the count of the number of days in the month.
+	 * @return the the count of the number of days in the month.
 	 **/
 	static public int getDaysInMonth(Calendar cal) 
 	{
@@ -977,8 +985,8 @@ public class Date {
 	 * Checks if a time is within a time span.
 	 *
 	 * @param compare   the starting time of the first time range.
-	 * @param baseStart   the starting time of the second time range.
-	 * @param baseEnd   the ending time of the second time range.
+	 * @param spanStart   the starting time of the second time range.
+	 * @param spanEnd   the ending time of the second time range.
 	 *
 	 * @return <code>true</code> if there is overlap of the two time ranges, otherwise <code>false</code>.
 	 **/

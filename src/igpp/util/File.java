@@ -14,7 +14,7 @@ import java.lang.SecurityException;
  * @version     1.0.0
  * @since     1.0.0
  **/
-public class File {
+public class File extends java.lang.Object {
 	
 	public File()
 	{
@@ -92,7 +92,7 @@ public class File {
 	 *				<code>false</code> otherwise.
 	 *
 	 * @throws IOException If an I/O error occurs, which is possible because 
-	 *                 the construction of the canonical pathname may require filesystem queries 
+	 *                 the construction of the canonical pathname may require file system queries 
 	 * @throws NullPointerException If the either pathname argument is null
 	 * @throws SecurityException If a security manager exists and its 
 	 *                SecurityManager.checkWrite(java.lang.String) method denies 
@@ -122,7 +122,7 @@ public class File {
 	/**
 	 * Determines if a given pathname is to a directory.
 	 * 
-	 * @param pathname	the name of the filesystem object.
+	 * @param pathname	the name of the file system object.
 	 *
 	 * @return		<code>true</code> if the pathname points to a directory.
 	 *				<code>false</code> otherwise.
@@ -154,7 +154,7 @@ public class File {
 	/**
 	 * Extract the name of the file from a pathname.
 	 * 
-	 * @param pathname	the name of the filesystem object.
+	 * @param pathname	the name of the file system object.
 	 *
 	 * @return		the file name portion of pathname.
 	 *
@@ -184,7 +184,7 @@ public class File {
 	/**
 	 * Extract the base name of the file from a pathname.
 	 * 
-	 * @param pathname	the name of the filesystem object.
+	 * @param pathname	the name of the file system object.
 	 *
 	 * @return		the base name of the file portion of pathname.
 	 *
@@ -202,7 +202,7 @@ public class File {
 	/**
 	 * Extract the extension of the file from a pathname.
 	 * 
-	 * @param pathname	the name of the filesystem object.
+	 * @param pathname	the name of the file system object.
 	 *
 	 * @return		the extension portion of pathname.
 	 *
@@ -218,5 +218,139 @@ public class File {
 		return ext;
 	}
 	
+	/**
+	 * Set the owner and group for a file.
+	 * Runs the systems "chown" or "chgrp" command with the correct arguments.
+	 * If user is null and group is set then "chgrp" is called, otherwise
+	 * "chown" is called.
+	 * 
+	 * @param pathname	the name of the file system object.
+	 * @param user the user name in the system.
+	 * @param group	the group name in the system
+	 *
+	 * @return		true if successful, otherwise false.
+	 *
+	 */
+	static public boolean setOwner(String pathname, String user, String group) 
+	{
+	   try 
+	   {
+		   String cmd = "chown";
+		   String option = null;
+		   
+		   if(user == null) { cmd = "chgrp"; } else { option = user; }
+		   if(group != null) { 
+			   if(option != null) option += ".";
+			   option += group; 
+		   }
+		   
+		   String command = cmd + " " + option + " " + pathname;
+		   Runtime.getRuntime().exec(command);
+	   } catch (IOException e) {
+		   e.printStackTrace();
+		   return false;
+	   }
+	   
+	   return true;
+	}
+	
+	/**
+	 * Return the size of the file in bytes.
+	 * 
+	 * @param pathname	the name of the file system object.
+	 *
+	 * @return		the size of the file in bytes.
+	 *
+	 */
+	 static public long getSize(String pathname)
+	 {
+		 java.io.File file = new java.io.File (pathname);
+		 
+		 return file.getTotalSpace();
+	 }
+
+	/**
+	 * Return the MD5 digest for a file.
+	 * This is a convenience function and calls igpp.util.Digest.digestFile() 
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		a String containing the MD5 digest for a file. If the digest cannot be calculated an empty string is returned.
+	 *
+	 */
+	 static public String getMD5(String pathname)
+	 {
+		 String digest = "";
+		 try {
+			 digest = igpp.util.Digest.digestFile(pathname);
+		 } catch(Exception e) {
+			 digest = "";
+		 }
+		 
+		 return digest;
+	 }	
+	 
+	/**
+	 * Return the SHA-1 digest for a file.
+	 * This is a convenience function and calls igpp.util.Digest.digestFile() 
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		a String containing the SHA-1 digest for a file. If the digest cannot be calculated an empty string is returned.
+	 *
+	 */
+	 static public String getSHA1(String pathname)
+	 {
+		 String digest = "";
+		 try {
+			 digest = igpp.util.Digest.digestFile(pathname, "SHA-1");
+		 } catch(Exception e) {
+			 digest = "";
+		 }
+		 
+		 return digest;
+	 }	
+	 
+	/**
+	 * Return the SHA-256 digest for a file.
+	 * This is a convenience function and calls igpp.util.Digest.digestFile() 
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		a String containing the SHA-256 digest for a file. If the digest cannot be calculated an empty string is returned.
+	 *
+	 */
+	 static public String getSHA256(String pathname)
+	 {
+		 String digest = "";
+		 try {
+			 digest = igpp.util.Digest.digestFile(pathname, "SHA-256");
+		 } catch(Exception e) {
+			 digest = "";
+		 }
+		 
+		 return digest;
+	 }	 
+	 
+	/**
+	 * Return the SHA-512 digest for a file.
+	 * This is a convenience function and calls igpp.util.Digest.digestFile() 
+	 * 
+	 * @param pathname	the name of the filesystem object.
+	 *
+	 * @return		a String containing the SHA-512 digest for a file. If the digest cannot be calculated an empty string is returned.
+	 *
+	 */
+	 static public String getSHA512(String pathname)
+	 {
+		 String digest = "";
+		 try {
+			 digest = igpp.util.Digest.digestFile(pathname, "SHA-512");
+		 } catch(Exception e) {
+			 digest = "";
+		 }
+		 
+		 return digest;
+	 }	 
 }
 

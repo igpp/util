@@ -392,7 +392,7 @@ public class MultiTime implements Comparable<MultiTime> {
     /** 
      * Returns the number of milliseconds between a time and this time.
 	 *
-	 * @param item	the instance of the MultiTime item to compare to.
+	 * @param other	the instance of the MultiTime item to compare to.
 	 *
      * @since           1.0
      */
