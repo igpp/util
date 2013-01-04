@@ -1,15 +1,11 @@
 package igpp.util;
 
-import java.io.UnsupportedEncodingException;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import java.util.ArrayList;
 
 import java.text.SimpleDateFormat;
 import java.text.NumberFormat;
-import java.lang.Character;
 
 /**
  * Methods to manipulate dates.
@@ -17,30 +13,33 @@ import java.lang.Character;
  * @author Todd King
  * @version 1.00 2007
  */
-public class Date {
+public class Date extends java.lang.Object {
+	public Date()
+	{
+	}
 	
 	static String	mVersion = "1.0.1";
 	static private String mDateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 	
  	// Enumeration of possible value type
-	/** 1/19/83 11:45:30.234 */	public static final String AMERDATE = "MM/dd/yy HH:mm:ss.SSS";      
-	/** 19.1.83 11:45:30.234 */	public static final String EURODATE = "dd-MM-yy HH:mm:ss.SSS";
-	/** jan 19, 1983 11:45:30.234 */ public static final String AMER = "MMM dd, yyyy HH:mm:ss.SSS";
-	/** 19 jan 1983 11:45:30.234 */	public static final String EURO = "dd MMM yyyy HH:mm:ss.SSS";
-	/** 1983 303 11:45:30.234 */ public static final String DOY = "yyyy DD HH:mm:ss.SSS";
-	/** 83.1.19 11:45:30.234 */ public static final String JAPANDATE = "yyyy.MM.dd HH:mm:ss.SSS";
-	/** 83.19.1 11:45:30.234 */ public static final String NIPPONDATE = "yyyy.dd.MM yyyy HH:mm:ss.SSS";
-	/** 83 01 19 00 11 45 30.234 */ public static final String HIGHLOW = "yyyy MM dd HH:mm:ss.SSS";
-	/** 83 019 JAN 19 11 45 30.234 */ public static final String ISEEDATE = "yyyy DDD MMM dd HH:mm:ss.SSS";
-	/** 1989-JAN-19 11:45:30.234 */	public static final String DFS = "yyyy-MMM-dd HH:mm:ss.SSS";
-	/** 1989/01/19 11:45:30.234 */ public static final String ABBRDFS = "yyyy/MM/dd HH:mm:ss.SSS";
-	/** 1989-01-19T11:45:30.234 or 1989-019T11:45:30.234 with omissions */	public static final String PDS = "T";
-	/** 19890119T114530.234 */ public static final String ISO = "yyyyMMddThhmmss.SSSS";
-	/** 758979930.234 */ public static final String BINARY = "B1966";
-	/** 19-01-1989 11:45:30.234 */ public static final String CLUSTER = "dd-MM-yyy HH:mm:ss.SSS";
-	/** 1989-01-19 11:45:30.234 */ public static final String CONVENTION = "yyyy-MM-dd HH:mm:ss.SSS";
-	/** 1989-01-19T11:45:30.234 or 1989-019T11:45:30.234 with omissions  */ public static final String ISO8601 = "T";
-	
+	/** 1/19/83 11:45:30.234 */	static public final String AMERDATE = "MM/dd/yy HH:mm:ss.SSS";      
+	/** 19.1.83 11:45:30.234 */	static public final String EURODATE = "dd-MM-yy HH:mm:ss.SSS";
+	/** jan 19, 1983 11:45:30.234 */ static public final String AMER = "MMM dd, yyyy HH:mm:ss.SSS";
+	/** 19 jan 1983 11:45:30.234 */	static public final String EURO = "dd MMM yyyy HH:mm:ss.SSS";
+	/** 1983 303 11:45:30.234 */ static public final String DOY = "yyyy DD HH:mm:ss.SSS";
+	/** 83.1.19 11:45:30.234 */ static public final String JAPANDATE = "yyyy.MM.dd HH:mm:ss.SSS";
+	/** 83.19.1 11:45:30.234 */ static public final String NIPPONDATE = "yyyy.dd.MM yyyy HH:mm:ss.SSS";
+	/** 83 01 19 00 11 45 30.234 */ static public final String HIGHLOW = "yyyy MM dd HH:mm:ss.SSS";
+	/** 83 019 JAN 19 11 45 30.234 */ static public final String ISEEDATE = "yyyy DDD MMM dd HH:mm:ss.SSS";
+	/** 1989-JAN-19 11:45:30.234 */	static public final String DFS = "yyyy-MMM-dd HH:mm:ss.SSS";
+	/** 1989/01/19 11:45:30.234 */ static public final String ABBRDFS = "yyyy/MM/dd HH:mm:ss.SSS";
+	/** 1989-01-19T11:45:30.234 or 1989-019T11:45:30.234 with omissions */	static public final String PDS = "T";
+	/** 19890119T114530.234 */ static public final String ISO = "yyyyMMddThhmmss.SSSS";
+	/** 758979930.234 */ static public final String BINARY = "B1966";
+	/** 19-01-1989 11:45:30.234 */ static public final String CLUSTER = "dd-MM-yyy HH:mm:ss.SSS";
+	/** 1989-01-19 11:45:30.234 */ static public final String CONVENTION = "yyyy-MM-dd HH:mm:ss.SSS";
+	/** 1989-01-19T11:45:30.234 or 1989-019T11:45:30.234 with omissions  */ static public final String ISO8601 = "T";
+
 	/** 
     * Command-line interface
 	 * 
@@ -233,7 +232,7 @@ public class Date {
 	}
 
 	/**
-	 * Create a Calaendar based on a the number of  milliseconds since the epoch (00:00:00 GMT, January 1, 1970).
+	 * Create a Calendar based on a the number of  milliseconds since the epoch (00:00:00 GMT, January 1, 1970).
 	 *
 	 * @param tick    count of the number of milliseconds since the epoch (00:00:00 GMT, January 1, 1970).
 	 *
@@ -650,7 +649,6 @@ public class Date {
 	 **/
 	static public String translateISO8601Duration(String duration)
 	{
-		int	value = 0;
 		char	c;
 		boolean	timeUnits = false;	// Date duration
 		char	units = ' ';
@@ -1208,14 +1206,14 @@ public class Date {
 	 * @param dateFormat   the date format to use as the "standard" format. 
 	 *                     See {@link SimpleDateFormat} for how to specify the date format.
 	 **/
-	public void setDateFormat(String dateFormat) { mDateFormat = dateFormat; }
+	static public void setDateFormat(String dateFormat) { mDateFormat = dateFormat; }
 	
 	/**
 	 * Get the current date format used for all date manipulation.
 	 *
 	 * @return the currently set "standard" format.
 	 **/
-	public String getDateFormat() { return mDateFormat; }
+	static public String getDateFormat() { return mDateFormat; }
 	
 }
 	 

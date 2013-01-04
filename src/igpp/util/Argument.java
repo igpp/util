@@ -1,7 +1,7 @@
 package igpp.util;
 
-import java.util.*;
-import java.text.*;
+// import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Argument is a class that contains methods for parsing options
@@ -23,7 +23,8 @@ public class Argument {
 		}
 	}
 	
-	/** List of option names and id*/ ArrayList	mItemList = new ArrayList();
+	/** List of option names and id*/ 
+	ArrayList<Item>	mItemList = new ArrayList<Item>();
 	
     /** 
      * Creates an instance.

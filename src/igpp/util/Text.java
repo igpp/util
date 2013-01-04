@@ -1,15 +1,9 @@
 package igpp.util;
 
-import java.io.UnsupportedEncodingException;
 import java.io.File;
 
-import java.util.Date;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.ArrayList;
 
-import java.text.SimpleDateFormat;
-import java.text.NumberFormat;
 import java.lang.Character;
 
 /**
@@ -39,12 +33,12 @@ public class Text {
 	/**
  	 * Determine if an ArrayList is empty or not defined.
  	 *
-  	 * @param list     An {@link ArrayList} of values.
+  	 * @param list     An {@link ArrayList<String>} of values.
  	 *
  	 * @return   <code>true</code> if the list has zero length elements or is null.
  	 *           <code>false</code> otherwise.
     **/
-	static public boolean isListEmpty(ArrayList list) 
+	static public boolean isListEmpty(ArrayList<String> list) 
 	{
 		if(list == null) return true;
 		if(list.size() == 0) return true;
@@ -165,7 +159,7 @@ public class Text {
  	 *
  	 * @param value   the value to determine its boolean equivalent.
  	 *
- 	 * @return  the boolean equivlanet or false if value is null.
+ 	 * @return  the boolean equivalent or false if value is null.
 	 **/
 	static public boolean isTrue(String value) 
 	{
@@ -199,7 +193,7 @@ public class Text {
 	}
 	
 	/**
- 	 * Convert a string to proper case by captializing the first letter.
+ 	 * Convert a string to proper case by capitalizing the first letter.
  	 *
  	 * @param value    the string to convert to proper case.
  	 *
@@ -216,6 +210,34 @@ public class Text {
 		buffer = value.substring(0, 1).toUpperCase() + value.substring(1);
 		
 		return buffer;
+	}
+	
+	/**
+ 	 * Convert a string to lower case.
+ 	 * 
+     * This is a static interface to java.lang.String.toLowerCase()
+ 	 *
+ 	 * @param value    the string to convert to proper case.
+ 	 *
+ 	 * @return the string converted to proper case.
+	 **/
+	static public String toLowerCase(String value) 
+	{
+		return value.toLowerCase();
+	}
+	
+	/**
+ 	 * Convert a string to upper case.
+ 	 * 
+     * This is a static interface to java.lang.String.toUpperCase()
+ 	 *
+ 	 * @param value    the string to convert to proper case.
+ 	 *
+ 	 * @return the string converted to proper case.
+	 **/
+	static public String toUpperCase(String value) 
+	{
+		return value.toUpperCase();
 	}
 	
 	/**
@@ -350,7 +372,7 @@ public class Text {
 	}
 	
 	/**
-	 * Parse a comma seperated list into an array of Strings, trimming extra white space.
+	 * Parse a comma separated list into an array of Strings, trimming extra white space.
 	 *
 	 * @param text   the string to parse.
 	 *
@@ -368,12 +390,12 @@ public class Text {
 	}
 	
 	/**
-	 * Constuct a comma seperated list of values from an array of Strings.
+	 * Construct a comma separated list of values from an array of Strings.
 	 * Values are not quoted.
 	 *
 	 * @param list     An array of {@link String} values.
 	 *
-	 * @return    a {@link String} containing a comma seperated list of values. 
+	 * @return    a {@link String} containing a comma separated list of values. 
 	 **/
 	static public String makeList(String[] list)
 	{
@@ -381,13 +403,13 @@ public class Text {
 	}
 	
 	/**
-	 * Constuct a comma seperated list of values from an array of Strings.
+	 * Construct a comma separated list of values from an array of Strings.
 	 * Values can be quoted.
 	 *
 	 * @param list     An array of {@link String} values.
 	 * @param quoted    determined if each value should be enclosed in double quotes (").
 	 *
-	 * @return    a {@link String} containing a comma seperated list of values. 
+	 * @return    a {@link String} containing a comma separated list of values. 
 	 **/
 	static public String makeList(String[] list, boolean quoted)
 	{
@@ -407,12 +429,12 @@ public class Text {
 	}
 	
 	/**
-	 * Constuct a comma seperated list of values from an ArrayList of Strings.
+	 * Construct a comma separated list of values from an ArrayList of Strings.
 	 * Values are not quoted.
 	 *
 	 * @param list     An array of {@link String} values.
 	 *
-	 * @return A string containing a comma seperated list of values.
+	 * @return A string containing a comma separated list of values.
 	 **/
 	static public String makeList(ArrayList<String> list)
 	{
@@ -420,11 +442,11 @@ public class Text {
 	}
 	
 	/**
-	 * Constuct a comma seperated list of values from an ArrayList of Strings.
+	 * Construct a comma separated list of values from an ArrayList of Strings.
 	 *
 	 * @param list     An array of {@link String} values.
 	 *
-	 * @return A string containing a comma seperated list of values.
+	 * @return A string containing a comma separated list of values.
 	 **/
 	static public String makeList(ArrayList<String> list, boolean quoted)
 	{
@@ -469,7 +491,7 @@ public class Text {
 	}   
 
 	/**
-	 * Create an ArrayList of strings contiaining unique values.
+	 * Create an ArrayList of strings containing unique values.
 	 * Optional exclude null strings.
 	 *
 	 * @param list    the list of values to scan.
@@ -518,6 +540,38 @@ public class Text {
 	{
 		for(int i = 0; i < list.length; i++) {
 			if(term.compareToIgnoreCase((String) list[i]) == 0) return true;
+		}	
+		return false;
+	}
+	
+	/**
+	 * Check if the term starts with any item in the list. 
+	 *
+	 * @param term   the term (phrase) to search for in the list.
+	 * @param list   the array of Strings to search.
+	 *
+	 * @return <code>true</code> if the term starts with any item in the list, <code>false</code> otherwise.
+	 **/
+	static public boolean isInPrefixList(String term, String[] list) 
+	{
+		for(int i = 0; i < list.length; i++) {
+			if(term.startsWith(list[i])) return true;
+		}	
+		return false;
+	}
+	
+	/**
+	 * Check if the term starts with any item in the list. 
+	 *
+	 * @param term   the term (phrase) to search for in the list.
+	 * @param list   the array of Strings to search.
+	 *
+	 * @return <code>true</code> if the term starts with any item in the list, <code>false</code> otherwise.
+	 **/
+	static public boolean isInPrefixList(String term, ArrayList<String> list) 
+	{
+		for(String item : list) {
+			if(term.startsWith(item)) return true;
 		}	
 		return false;
 	}
@@ -638,7 +692,7 @@ public class Text {
 	 *
 	 * @param bytes  a count.
 	 *
-	 * @return a formatted string ccontaining the shortest possible value
+	 * @return a formatted string containing the shortest possible value
 	 *         followed with the appropriate units.
 	 **/
 	static public String toUnitizedBytes(long bytes)
@@ -647,7 +701,7 @@ public class Text {
 		long	kbyte = 1024;
 		double	multiple;
 		String	buffer;
-		ArrayList	units = new ArrayList();
+		ArrayList<String>	units = new ArrayList<String>();
 		
 		units.add(" KB");
 		units.add(" MB");
@@ -738,7 +792,7 @@ public class Text {
 	/**
  	 * Get the path name portion of a URL.
  	 *
- 	 * @param pathName   the path to a file. Full or partial path is permited.
+ 	 * @param pathName   the path to a file. Full or partial path is permitted.
  	 *
  	 * @return   the path portion of the pathname.
 	 **/
@@ -754,7 +808,7 @@ public class Text {
 	}
 
 	/**
-	 * Concatenate two paths ensuring that a file seperator exists between each part.
+	 * Concatenate two paths ensuring that a file separator exists between each part.
 	 *
 	 * @param path1   the first part of the path.
 	 * @param path2   the second part of the path.
@@ -769,11 +823,14 @@ public class Text {
 		if( path2.startsWith(separator)) path2 = path2.substring(1);
 		path += path2;
 		
+		// Remove any embedded self references (i.e. "/./")
+		path = path.replaceAll(separator + "\\." + separator, separator);
+		
 		return path;
 	}
 
 	/**
-	 * Concatenate two paths ensuring that a file seperator exists between each part.
+	 * Concatenate two paths ensuring that a file separator exists between each part.
 	 * The file separator (File.separator) for the current operating system is used.
 	 *
 	 * @param path1   the first part of the path.
@@ -791,7 +848,7 @@ public class Text {
     *	
     * @param text    the string to split on capital letters.
     *
-    * @return an array of strings contining each word.
+    * @return an array of strings containing each word.
     *
     * @since           1.0
     **/
@@ -840,6 +897,46 @@ public class Text {
      **/
 	static public double toDouble(String value) {
 		return Double.parseDouble(value);
+	}
+
+    /** 
+     * Replace patterns in a string and return the result.
+     *
+     * This is a static interface to java.lang.String.replaceAll()
+     * 
+     * @param regex	regular expression for pattern to find.
+     * @parameter value The value to replace each found pattern.
+	 * @param opon		a string to operate on.
+	 *
+	 * @return			the string with the pattern replaced with value.
+	 *
+     * @since           1.0
+     **/
+	static public String replaceAll(String regex, String value, String opon) {
+		if(regex == null) return opon;
+		if(value == null) return opon;
+		if(opon == null) return opon;
+		
+		return opon.replaceAll(regex, value);
+	}
+	
+    /** 
+     * Trim the leading and trailing spaces from a string and return the result.
+     *
+     * This is a static interface to java.lang.String.trim()
+     * 
+     * @param regex	regular expression for pattern to find.
+     * @parameter value The value to replace each found pattern.
+	 * @param opon		a string to operate on.
+	 *
+	 * @return			the string with the pattern replaced with value.
+	 *
+     * @since           1.0
+     **/
+	static public String trim(String opon) {
+		if(opon == null) return opon;
+		
+		return opon.trim();
 	}
 
 
