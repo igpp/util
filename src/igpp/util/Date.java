@@ -387,9 +387,24 @@ public class Date extends java.lang.Object {
 	}
 	
 	/**
+	 * Create a standard ISO-8601 format time string for a long (count of seconds).
+	 *
+	 * @param tick    the number of milliseconds since January 1, 1970, 00:00:00 GMT 
+	 *                not to exceed the milliseconds representation for the year 8099.
+	 *                A negative number indicates the number of milliseconds before 
+	 *                January 1, 1970, 00:00:00 GMT.
+	 *
+	 * @return the date and time in the standard format (default: yyyy-MM-ddTHH:mm:ss.SSS)
+	 **/
+	static public String getISO8601DateString(long tick)
+	{
+		return getISO8601DateString(new java.util.Date(tick));
+	}
+	
+	/**
 	 * Create a standard ISO-8601 format time string from a string.
 	 *
-	 * @param date    the date and time string in the ISO8601 format yyyy-MM-ddTHH:mm:ss.SSS.
+	 * @param date    the date and time string in any allowed abbreviated ISO8601 format time string.
 	 *
 	 * @return  A {@link String} with the date and time formatted as an ISO-8601 time string of yyyy-MM-ddTHH:mm:ss.SSSZ.
 	 **/

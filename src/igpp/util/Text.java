@@ -33,7 +33,7 @@ public class Text {
 	/**
  	 * Determine if an ArrayList is empty or not defined.
  	 *
-  	 * @param list     An {@link ArrayList<String>} of values.
+  	 * @param list     a list of values.
  	 *
  	 * @return   <code>true</code> if the list has zero length elements or is null.
  	 *           <code>false</code> otherwise.
@@ -511,6 +511,45 @@ public class Text {
 		return newList;
 	}
 	
+	/**
+	 * Create an ArrayList of strings containing the intersection of two lists.
+	 *
+	 * @param listA    a list of values to scan.
+	 * @param listB    a list of values to scan.
+	 *
+	 * @return  an ArrayList containing those items in both listA and listB.
+	 **/
+	static public ArrayList<String> intersection(ArrayList<String> listA, ArrayList<String> listB) 
+	{
+		ArrayList<String> newList = new ArrayList<String>();
+		
+		for(String text : listA) {
+			if(isInList(text, listB)) newList.add(text);
+		}
+
+		return newList;
+	}
+	
+
+	/**
+	 * Create an ArrayList of strings containing the complement of two lists.
+	 *
+	 * @param listA    a list of values to scan.
+	 * @param listB    a list of values to scan.
+	 *
+	 * @return  an ArrayList containing those items in listA, but not in listB.
+	 **/
+	static public ArrayList<String> complement(ArrayList<String> listA, ArrayList<String> listB) 
+	{
+		ArrayList<String> newList = new ArrayList<String>();
+		
+		for(String text : listA) {
+			if( ! isInList(text, listB)) newList.add(text);
+		}
+
+		return newList;
+	}
+	
 
 	/**
 	 * Check if an item is in a list 
@@ -905,7 +944,7 @@ public class Text {
      * This is a static interface to java.lang.String.replaceAll()
      * 
      * @param regex	regular expression for pattern to find.
-     * @parameter value The value to replace each found pattern.
+     * @param value The value to replace each found pattern.
 	 * @param opon		a string to operate on.
 	 *
 	 * @return			the string with the pattern replaced with value.
@@ -925,8 +964,6 @@ public class Text {
      *
      * This is a static interface to java.lang.String.trim()
      * 
-     * @param regex	regular expression for pattern to find.
-     * @parameter value The value to replace each found pattern.
 	 * @param opon		a string to operate on.
 	 *
 	 * @return			the string with the pattern replaced with value.

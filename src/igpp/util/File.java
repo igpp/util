@@ -266,7 +266,22 @@ public class File extends java.lang.Object {
 	 {
 		 java.io.File file = new java.io.File (pathname);
 		 
-		 return file.getTotalSpace();
+		 return file.length();
+	 }
+
+	/**
+	 * Deterines if a file exists.
+	 * 
+	 * @param pathname	the name of the file system object.
+	 *
+	 * @return		true if the file exists, false otherwise.
+	 *
+	 */
+	 static public boolean exists(String pathname)
+	 {
+		 java.io.File file = new java.io.File (pathname);
+		 
+		 return file.exists();
 	 }
 
 	/**
